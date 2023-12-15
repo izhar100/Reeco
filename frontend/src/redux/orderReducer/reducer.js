@@ -1,4 +1,4 @@
-import { GET_ORDER_ERROR, GET_ORDER_REQ, GET_ORDER_SUCCESS } from "./actionType"
+import { GET_ORDER_ERROR, GET_ORDER_REQ, GET_ORDER_SUCCESS, UPDATE_ORDER } from "./actionType"
 
 const initState={
     loading:false,
@@ -21,6 +21,11 @@ export const reducer=(state=initState,{type,payload})=>{
         case GET_ORDER_ERROR:{
             return {
                 ...state,loading:false,error:true
+            }
+        }
+        case UPDATE_ORDER:{
+            return {
+                ...state,orders:payload
             }
         }
         default:{

@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Grid, GridItem, Heading, IconButton, Image, Input, InputGroup, InputRightElement, Text } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SlArrowRight } from "react-icons/sl";
 import { GiFruitBowl } from "react-icons/gi";
 import { IoIosSearch } from "react-icons/io";
@@ -15,11 +15,23 @@ const Order = () => {
             orders:store.orders
         }
     })
+    const [total,setTotal]=useState(0)
     const dispatch=useDispatch()
     useEffect(()=>{
        dispatch(getOrders)
     },[])
+    useEffect(()=>{
+        getTotal()
+    },[orders])
     const arr = new Array(8).fill(1)
+    function getTotal(){
+      let sum=0;
+      for(let i=0; i<orders[0]?.items.length; i++){
+        sum+=orders[0].items[i].Quantity*orders[0].items[i].Price
+      }
+      setTotal(sum.toFixed(2))
+      
+    }
     return (
         <>
             <Box pt={"20px"} boxShadow={"md"} pb={"10px"}>
@@ -27,11 +39,11 @@ const Order = () => {
                     <Flex alignItems={"center"}>
                         <Text>Order</Text>
                         <SlArrowRight size={"12px"} />
-                        <Text borderBottom={"1px solid #9c9c9c"}>Order 34895ABC</Text>
+                        <Text borderBottom={"1px solid #9c9c9c"}>Order {orders[0]?.id}</Text>
                     </Flex>
                     <br />
                     <Flex alignItems={"center"} justifyContent={"space-between"}>
-                        <Heading fontSize={"24px"}>Order 34895ABC</Heading>
+                        <Heading fontSize={"24px"}>Order {orders[0]?.id}</Heading>
                         <Flex gap={"20px"}>
                             <Button variant={"outline"} colorScheme='green' borderRadius={"full"} px={"20px"} size={"sm"}>Back</Button>
                             <Button colorScheme='green' borderRadius={"full"} px={"20px"} size={"sm"}>Approve Order</Button>
@@ -43,15 +55,15 @@ const Order = () => {
             <Flex w={"90%"} m={"auto"} py={"20px"} px={"5px"} borderRadius={"10px"} border={"2px solid #c2c2c2"}>
                 <Box flex={1} px={"30px"} borderRight={"2px solid #bdbdbd"}>
                     <Text fontSize={"16px"} fontWeight={500} color={"#5c5c5c"}>Supplier</Text>
-                    <Text fontSize={"18px"} fontWeight={700}>East cost fruits & vegetables</Text>
+                    <Text fontSize={"18px"} fontWeight={700}>{orders[0]?.supplier}</Text>
                 </Box>
                 <Box flex={1} px={"30px"} borderRight={"2px solid #bdbdbd"}>
                     <Text fontSize={"16px"} fontWeight={500} color={"#5c5c5c"}>Shipping date</Text>
-                    <Text fontSize={"18px"} fontWeight={700}>Thu,Feb 10</Text>
+                    <Text fontSize={"18px"} fontWeight={700}>{orders.length>0 && orders[0]['Shipping date']}</Text>
                 </Box>
                 <Box flex={1} px={"30px"} borderRight={"2px solid #bdbdbd"}>
                     <Text fontSize={"16px"} fontWeight={500} color={"#5c5c5c"}>Total</Text>
-                    <Text fontSize={"18px"} fontWeight={700}>$ 15,028.3</Text>
+                    <Text fontSize={"18px"} fontWeight={700}>$ {total}</Text>
                 </Box>
                 <Box flex={1} px={"30px"} borderRight={"2px solid #bdbdbd"}>
                     <Text fontSize={"16px"} fontWeight={500} color={"#5c5c5c"}>Category</Text>
@@ -67,7 +79,7 @@ const Order = () => {
                 </Box>
                 <Box flex={1} px={"30px"} borderRight={"2px solid #bdbdbd"}>
                     <Text fontSize={"16px"} fontWeight={500} color={"#5c5c5c"}>Department</Text>
-                    <Text fontSize={"18px"} fontWeight={700}>300-444-678</Text>
+                    <Text fontSize={"18px"} fontWeight={700}>{orders[0]?.Department}</Text>
                 </Box>
                 <Box flex={1} px={"30px"}>
                     <Text fontSize={"16px"} fontWeight={500} color={"#5c5c5c"}>status</Text>
@@ -123,8 +135,8 @@ const Order = () => {
                         Total
                      </Text>
                    </Box>
-                   <Box flex={1.3} pl={"10px"}>
-                     <Text color={"#575757"}>
+                   <Box flex={1.3}>
+                     <Text color={"#575757"} pl={"20px"}>
                         Status
                      </Text>
                    </Box>
@@ -132,9 +144,9 @@ const Order = () => {
                    </Box>
                 </Flex>
                 {
-                    arr.map((el,i)=>(
+                    orders[0]?.items?.map((item,i)=>(
                         <div key={i}>
-                            <ItemCard/>
+                            <ItemCard item={item} lastItem={orders[0].items.length-1} index={i}/>
                         </div>
                     ))
                 }
