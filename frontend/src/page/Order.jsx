@@ -9,10 +9,11 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { getOrders } from '../redux/orderReducer/action';
 
 const Order = () => {
-    const {orders}=useSelector((store)=>{
+    const {orders,loading}=useSelector((store)=>{
         console.log(store)
         return {
-            orders:store.orders
+            orders:store.orders,
+            loading:store.loading
         }
     })
     const [total,setTotal]=useState(0)
@@ -33,7 +34,12 @@ const Order = () => {
       
     }
     return (
-        <>
+        <> 
+        {
+            loading ?
+            <Heading textAlign={"center"} mt={"200px"}>Loading...</Heading>
+            :
+            <>
             <Box pt={"20px"} boxShadow={"md"} pb={"10px"}>
                 <Box className='heading' w={"90%"} m={"auto"}>
                     <Flex alignItems={"center"}>
@@ -154,6 +160,10 @@ const Order = () => {
             </Box>
             <br />
             <br />
+            </>
+
+        }
+            
         </>
     )
 }

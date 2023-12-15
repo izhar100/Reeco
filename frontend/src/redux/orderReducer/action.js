@@ -6,8 +6,8 @@ export const getOrders=async(dispatch)=>{
         dispatch({type:GET_ORDER_REQ})
         const res=await fetch(api)
         const data=await res.json()
-        console.log(data)
         dispatch({type:GET_ORDER_SUCCESS,payload:data})
+        return data;
     } catch (error) {
         console.log(error)
         dispatch({type:GET_ORDER_ERROR})
