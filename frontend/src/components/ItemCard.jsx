@@ -231,16 +231,19 @@ const ItemCard = ({ item, lastItem, index }) => {
                   </Flex>
                   <Flex gap={"10px"} mt={"10px"}>
                     <Button variant={'outline'} size={"sm"} borderRadius={'full'}
-                    fontWeight={400}
+                    fontWeight={400} bgColor={Status.includes("Missing")?"#abffa9":""}
                     onClick={()=>setStatus('Missing')}
                     >Missing Product</Button>
                     <Button variant={'outline'} size={"sm"} borderRadius={'full'}
+                    bgColor={Status.includes("Quantity is not the same")?"#abffa9":""}
                     fontWeight={400} onClick={()=>setStatus('Quantity is not the same')}
                     >Quatity is not the same</Button>
                     <Button variant={'outline'} size={"sm"} borderRadius={'full'}
+                    bgColor={Status.includes("Price is not the same")?"#abffa9":""}
                     fontWeight={400} onClick={()=>setStatus('Price is not the same')}
                     >Price is not the same</Button>
                     <Button variant={'outline'} size={"sm"} borderRadius={'full'}
+                    bgColor={Status.includes("Other")?"#abffa9":""}
                     fontWeight={400} onClick={()=>setStatus('Other')}>Other</Button>
                   </Flex>
                 </ModalBody>
