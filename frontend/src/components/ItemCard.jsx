@@ -47,6 +47,7 @@ const ItemCard = ({ item, lastItem, index }) => {
     })
   }
   const handleCut = () => {
+    setEditClick(false)
     onOpen()
   }
   const handleMissing = () => {
@@ -160,14 +161,14 @@ const ItemCard = ({ item, lastItem, index }) => {
             {(item.OldPrice * item.OldQuantity).toFixed(2)}
           </Text> */}
         </Flex>
-        <Flex flex={1.3} pl={"20px"} alignItems={"center"} bgColor={"#e8e8e8"} my={"-10px"} ml={"-10px"}>
+        <Flex flex={1.3} pl={"20px"} alignItems={"center"} bgColor={"#f3f3f3"} my={"-10px"} ml={"-10px"}>
           <Text color={"#ffffff"} bgColor={item.Status ? (item.Status.includes("Missing-urgent") ? "red" : item.Status.includes("Missing") ? "#ff5b5b" : item.Status.includes("Approved") ? "green" : "green"):""} py={"4px"}
             borderRadius={"full"} px={"10px"}
           >
             {item.Status}
           </Text>
         </Flex>
-        <Flex flex={0.7} alignItems={"center"} gap={"5px"} cursor={'pointer'} bgColor={"#e8e8e8"} my={"-10px"} mr={"-10px"}>
+        <Flex flex={0.7} alignItems={"center"} gap={"5px"} cursor={'pointer'} bgColor={"#f3f3f3"} my={"-10px"} mr={"-10px"}>
           {
             checkLoading?
             <Spinner size={"sm"}/>
